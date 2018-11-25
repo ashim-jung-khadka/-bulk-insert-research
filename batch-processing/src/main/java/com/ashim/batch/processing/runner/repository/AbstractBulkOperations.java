@@ -16,45 +16,45 @@ import java.util.List;
  */
 public abstract class AbstractBulkOperations {
 
-    private final Logger log = LoggerFactory.getLogger(AbstractBulkOperations.class);
+	private final Logger log = LoggerFactory.getLogger(AbstractBulkOperations.class);
 
-    @Autowired
-    public CleanDb cleanDb;
+	@Autowired
+	public CleanDb cleanDb;
 
-    @Autowired
-    private IDBI dbi;
+	@Autowired
+	private IDBI dbi;
 
-    /**
-     * Persists lots of entities and checks the count.
-     */
-    public final void bulkInsert() {
-        final int n = 100000;
+	/**
+	 * Persists lots of entities and checks the count.
+	 */
+	public final void bulkInsert() {
+		final int n = 100000;
 
-        List<Customer> entities = createEntities(n);
-        log.info("{} - Persisting...", this.getClassName());
+		List<Customer> entities = createEntities(n);
+		log.info("{} - Persisting...", this.getClassName());
 
-        long start = System.currentTimeMillis();
-        bulkOperations().bulkPersist(entities);
-        long end = System.currentTimeMillis();
+		long start = System.currentTimeMillis();
+		bulkOperations().bulkPersist(entities);
+		long end = System.currentTimeMillis();
 
-        log.info("{} - Done in {} sec", getClassName(), (end - start) / 1000);
-        this.cleanDb.cleanUp();
-    }
+		log.info("{} - Done in {} sec", getClassName(), (end - start) / 1000);
+		this.cleanDb.cleanUp();
+	}
 
-    private static List<Customer> createEntities(int num) {
-        List<Customer> entities = new ArrayList<>(num);
+	private static List<Customer> createEntities(int num) {
+		List<Customer> entities = new ArrayList<>(num);
 
-        for (int i = 1; i <= num; i++) {
-            entities.add(new Customer(i));
-        }
+		for (int i = 1; i <= num; i++) {
+			entities.add(new Customer(i));
+		}
 
-        return entities;
-    }
+		return entities;
+	}
 
-    protected abstract BulkOperationsRepo bulkOperations();
+	protected abstract BulkOperationsRepo bulkOperations();
 
-    private String getClassName() {
-        return this.getClass().getSimpleName();
-    }
+	private String getClassName() {
+		return this.getClass().getSimpleName();
+	}
 
 }

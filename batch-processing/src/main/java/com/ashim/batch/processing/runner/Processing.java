@@ -15,36 +15,36 @@ import org.springframework.stereotype.Component;
 @Component
 public class Processing {
 
-    @Autowired
-    @Qualifier("default")
-    private DefaultBulkOperations defaultBulkOperations;
+	@Autowired
+	@Qualifier("default")
+	private DefaultBulkOperations defaultBulkOperations;
 
-    @Autowired
-    @Qualifier("flushing")
-    private FlushingBulkOperations flushingBulkOperations;
+	@Autowired
+	@Qualifier("flushing")
+	private FlushingBulkOperations flushingBulkOperations;
 
-    @Autowired
-    @Qualifier("jdbcTemplate")
-    private JdbcTemplateBulkOperations jdbcTemplateBulkOperations;
+	@Autowired
+	@Qualifier("jdbcTemplate")
+	private JdbcTemplateBulkOperations jdbcTemplateBulkOperations;
 
-    @Autowired
-    @Qualifier("jdbi")
-    private JdbiBulkOperations jdbiBulkOperations;
+	@Autowired
+	@Qualifier("jdbi")
+	private JdbiBulkOperations jdbiBulkOperations;
 
-    @Autowired
-    @Qualifier("statelessSession")
-    private StatelessSessionBulkOperations statelessSessionBulkOperations;
+	@Autowired
+	@Qualifier("statelessSession")
+	private StatelessSessionBulkOperations statelessSessionBulkOperations;
 
-    public void run() {
+	public void run() {
 
-        this.defaultBulkOperations.bulkInsert();
+		this.defaultBulkOperations.bulkInsert();
 
-        this.flushingBulkOperations.bulkInsert();
+		this.flushingBulkOperations.bulkInsert();
 
-        this.jdbcTemplateBulkOperations.bulkInsert();
+		this.jdbcTemplateBulkOperations.bulkInsert();
 
-        this.jdbiBulkOperations.bulkInsert();
+		this.jdbiBulkOperations.bulkInsert();
 
-        this.statelessSessionBulkOperations.bulkInsert();
-    }
+		this.statelessSessionBulkOperations.bulkInsert();
+	}
 }

@@ -11,6 +11,6 @@ import java.util.List;
 @Component
 public interface BulkOperationsRepo {
 
-    public void bulkPersist(List<Customer> entities);
+	public void bulkPersist(List<Customer> entities);
 
 }

@@ -11,28 +11,28 @@ import java.util.List;
  */
 public class FlushingBulkOperationsRepo implements BulkOperationsRepo {
 
-    private final EntityManager em;
+	private final EntityManager em;
 
-    private final int batchSize;
+	private final int batchSize;
 
-    public FlushingBulkOperationsRepo(EntityManager em, int batchSize) {
-        this.em = em;
-        this.batchSize = batchSize;
-    }
+	public FlushingBulkOperationsRepo(EntityManager em, int batchSize) {
+		this.em = em;
+		this.batchSize = batchSize;
+	}
 
-    @Override
-    @Transactional
-    public void bulkPersist(List<Customer> entities) {
-        int i = 0;
-        for (Customer entity : entities) {
-            this.em.persist(entity);
-            i++;
+	@Override
+	@Transactional
+	public void bulkPersist(List<Customer> entities) {
+		int i = 0;
+		for (Customer entity : entities) {
+			this.em.persist(entity);
+			i++;
 
-            if (i % this.batchSize == 0) {
-                this.em.flush();
-                this.em.clear();
-            }
-        }
-    }
+			if (i % this.batchSize == 0) {
+				this.em.flush();
+				this.em.clear();
+			}
+		}
+	}
 
 }

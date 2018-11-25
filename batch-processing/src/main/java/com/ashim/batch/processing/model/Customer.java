@@ -9,34 +9,34 @@ import javax.persistence.Id;
 @Entity
 public class Customer {
 
-    @Id
-    private long id;
+	@Id
+	private long id;
 
-    public Customer(long id) {
-        this.id = id;
-    }
+	public Customer(long id) {
+		this.id = id;
+	}
 
-    public long getId() {
-        return id;
-    }
+	public long getId() {
+		return id;
+	}
 
-    @Override
-    public int hashCode() {
-        return (int) (id ^ (id >>> 32));
-    }
+	@Override
+	public int hashCode() {
+		return (int) (id ^ (id >>> 32));
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Customer)) {
-            return false;
-        }
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Customer)) {
+			return false;
+		}
 
-        return ((Customer) obj).id == id;
-    }
+		return ((Customer) obj).id == id;
+	}
 
-    @Override
-    public String toString() {
-        return "Customer #" + id;
-    }
+	@Override
+	public String toString() {
+		return "Customer #" + id;
+	}
 
 }

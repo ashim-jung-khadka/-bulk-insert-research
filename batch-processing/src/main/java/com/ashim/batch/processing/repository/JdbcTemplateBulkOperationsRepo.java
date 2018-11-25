@@ -14,27 +14,27 @@ import java.util.List;
  */
 public class JdbcTemplateBulkOperationsRepo implements BulkOperationsRepo {
 
-    private final JdbcTemplate template;
+	private final JdbcTemplate template;
 
-    public JdbcTemplateBulkOperationsRepo(JdbcTemplate template) {
-        this.template = template;
-    }
+	public JdbcTemplateBulkOperationsRepo(JdbcTemplate template) {
+		this.template = template;
+	}
 
-    @Override
-    @Transactional
-    public void bulkPersist(final List<Customer> entities) {
-        this.template.batchUpdate("insert into customer (id) values (?)", new BatchPreparedStatementSetter() {
+	@Override
+	@Transactional
+	public void bulkPersist(final List<Customer> entities) {
+		this.template.batchUpdate("insert into customer (id) values (?)", new BatchPreparedStatementSetter() {
 
-            @Override
-            public void setValues(PreparedStatement ps, int i) throws SQLException {
-                ps.setLong(1, entities.get(i).getId());
-            }
+			@Override
+			public void setValues(PreparedStatement ps, int i) throws SQLException {
+				ps.setLong(1, entities.get(i).getId());
+			}
 
-            @Override
-            public int getBatchSize() {
-                return entities.size();
-            }
-        });
-    }
+			@Override
+			public int getBatchSize() {
+				return entities.size();
+			}
+		});
+	}
 
 }

@@ -13,19 +13,19 @@ import java.util.List;
  */
 public class StatelessSessionBulkOperationsRepo implements BulkOperationsRepo {
 
-    @Autowired
-    private final StatelessSession statelessSession;
+	@Autowired
+	private final StatelessSession statelessSession;
 
-    public StatelessSessionBulkOperationsRepo(EntityManager em, StatelessSession statelessSession) {
-        this.statelessSession = statelessSession;
-    }
+	public StatelessSessionBulkOperationsRepo(EntityManager em, StatelessSession statelessSession) {
+		this.statelessSession = statelessSession;
+	}
 
-    @Override
-    @Transactional
-    public void bulkPersist(List<Customer> entities) {
-        for (Customer entity : entities) {
-            this.statelessSession.insert(entity);
-        }
-    }
+	@Override
+	@Transactional
+	public void bulkPersist(List<Customer> entities) {
+		for (Customer entity : entities) {
+			this.statelessSession.insert(entity);
+		}
+	}
 
 }
