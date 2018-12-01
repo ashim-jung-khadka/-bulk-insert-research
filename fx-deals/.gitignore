@@ -1,0 +1,6 @@
+target
+.idea
+*.iml
+upload-dir
+logs
+**/.DS_Store
