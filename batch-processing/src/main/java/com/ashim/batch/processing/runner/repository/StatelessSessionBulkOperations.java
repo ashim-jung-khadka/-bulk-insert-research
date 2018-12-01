@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
 @Qualifier("statelessSession")
 public final class StatelessSessionBulkOperations extends AbstractBulkOperations {
 
-	@Autowired
-	@Qualifier("statelessSessionRepo")
-	private BulkOperationsRepo bulkOperationsRepo;
+    @Autowired
+    @Qualifier("statelessSessionRepo")
+    private BulkOperationsRepo bulkOperationsRepo;
 
-	@Override
-	protected BulkOperationsRepo bulkOperations() {
-		return bulkOperationsRepo;
-	}
+    @Override
+    protected BulkOperationsRepo bulkOperations() {
+        return bulkOperationsRepo;
+    }
 
 }

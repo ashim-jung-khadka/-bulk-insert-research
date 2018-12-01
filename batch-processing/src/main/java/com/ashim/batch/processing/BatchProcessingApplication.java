@@ -13,17 +13,17 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class BatchProcessingApplication {
 
-	@Autowired private Processing processing;
+    @Autowired private Processing processing;
 
-	public static void main(String[] args) {
-		SpringApplication.run(BatchProcessingApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BatchProcessingApplication.class, args);
+    }
 
-	@Bean
-	CommandLineRunner init() {
-		return args -> {
-			processing.run();
-			System.exit(0);
-		};
-	}
+    @Bean
+    CommandLineRunner init() {
+        return args -> {
+            processing.run();
+            System.exit(0);
+        };
+    }
 }

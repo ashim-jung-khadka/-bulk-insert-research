@@ -33,139 +33,138 @@ import java.util.Properties;
 @Configuration
 public class BeanConfig {
 
-	// DataSource
+    // DataSource
 
-	@Bean
-	public DataSource dataSource() throws IllegalStateException, PropertyVetoException {
-		ComboPooledDataSource dataSource = new ComboPooledDataSource();
-		dataSource.setDriverClass("com.mysql.jdbc.Driver");
-		// IMPORTANT! THE rewriteBatchedStatements=true is required, otherwise mysql won'tchange statements to one batch insert!
-		dataSource
-				.setJdbcUrl("jdbc:mysql://localhost:3306/examplesdb?rewriteBatchedStatements=true&autoReconnect=true");
-		dataSource.setUser("root");
-		dataSource.setPassword("root");
+    @Bean
+    public DataSource dataSource() throws IllegalStateException, PropertyVetoException {
+        ComboPooledDataSource dataSource = new ComboPooledDataSource();
+        dataSource.setDriverClass("com.mysql.jdbc.Driver");
+        // IMPORTANT! THE rewriteBatchedStatements=true is required, otherwise mysql won'tchange statements to one batch insert!
+        dataSource
+                .setJdbcUrl("jdbc:mysql://localhost:3306/examplesdb?rewriteBatchedStatements=true&autoReconnect=true");
+        dataSource.setUser("root");
+        dataSource.setPassword("root");
 
-		return dataSource;
-	}
+        return dataSource;
+    }
 
-	// EntityManagerFactory
+    // EntityManagerFactory
 
-	@Bean
-	public EntityManagerFactory entityManagerFactory() throws PropertyVetoException {
-		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-		vendorAdapter.setDatabase(Database.MYSQL);
-		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-		factory.setJpaProperties(hibProperties());
+    @Bean
+    public EntityManagerFactory entityManagerFactory() throws PropertyVetoException {
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setDatabase(Database.MYSQL);
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaProperties(hibProperties());
 
-		factory.setJpaVendorAdapter(vendorAdapter);
-		factory.setPackagesToScan("com.ashim.batch.processing");
-		factory.setDataSource(dataSource());
-		factory.afterPropertiesSet();
-		return factory.getObject();
-	}
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan("com.ashim.batch.processing");
+        factory.setDataSource(dataSource());
+        factory.afterPropertiesSet();
+        return factory.getObject();
+    }
 
-	private Properties hibProperties() {
-		Properties properties = new Properties();
-		properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-		properties.put("hibernate.connection.driver_class",
-				"org.hibernate.service.jdbc.connections.internal.C3P0ConnectionProvider");
-		properties.put("hibernate.jdbc.batch_size", batchSize());
-		properties.put("hibernate.c3p0.max_size", 10);
-		properties.put("hibernate.c3p0.min_size", 0);
-		properties.put("hibernate.c3p0.timeout", 60);
-		properties.put("hibernate.c3p0.max_statements", 5);
-		properties.put("hibernate.c3p0.acquireIncrement", 1);
+    private Properties hibProperties() {
+        Properties properties = new Properties();
+        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+        properties.put("hibernate.connection.driver_class",
+                "org.hibernate.service.jdbc.connections.internal.C3P0ConnectionProvider");
+        properties.put("hibernate.jdbc.batch_size", batchSize());
+        properties.put("hibernate.c3p0.max_size", 10);
+        properties.put("hibernate.c3p0.min_size", 0);
+        properties.put("hibernate.c3p0.timeout", 60);
+        properties.put("hibernate.c3p0.max_statements", 5);
+        properties.put("hibernate.c3p0.acquireIncrement", 1);
 
-		properties.put("hibernate.hbm2ddl.auto", "update");
-		properties.put("hibernate.order_inserts", "true");
-		properties.put("hibernate.order_updates", "true");
-		return properties;
-	}
+        properties.put("hibernate.hbm2ddl.auto", "update");
+        properties.put("hibernate.order_inserts", "true");
+        properties.put("hibernate.order_updates", "true");
+        return properties;
+    }
 
-	// EntityManager
+    // EntityManager
 
-	@Bean
-	public SharedEntityManagerBean entityManager(EntityManagerFactory entityManagerFactory) {
-		SharedEntityManagerBean bean = new SharedEntityManagerBean();
-		bean.setEntityManagerFactory(entityManagerFactory);
-		return bean;
-	}
+    @Bean
+    public SharedEntityManagerBean entityManager(EntityManagerFactory entityManagerFactory) {
+        SharedEntityManagerBean bean = new SharedEntityManagerBean();
+        bean.setEntityManagerFactory(entityManagerFactory);
+        return bean;
+    }
 
-	// TransactionManager
+    // TransactionManager
 
-	@Bean
-	public JpaTransactionManager transactionManager() throws IllegalStateException, PropertyVetoException {
-		JpaTransactionManager transactionManager = new JpaTransactionManager();
-		transactionManager.setEntityManagerFactory(entityManagerFactory());
-		return transactionManager;
-	}
+    @Bean
+    public JpaTransactionManager transactionManager() throws IllegalStateException, PropertyVetoException {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactory());
+        return transactionManager;
+    }
 
-	// bulk operations
+    // bulk operations
 
-	@Bean
-	@Qualifier("defaultRepo")
-	public BulkOperationsRepo defaultBulkOperationsRepo(EntityManager entityManager) {
-		return new DefaultBulkOperationsRepo(entityManager);
-	}
+    @Bean
+    @Qualifier("defaultRepo")
+    public BulkOperationsRepo defaultBulkOperationsRepo(EntityManager entityManager) {
+        return new DefaultBulkOperationsRepo(entityManager);
+    }
 
-	@Bean
-	@Qualifier("flushingRepo")
-	public BulkOperationsRepo flushingBulkOperationsRepo(EntityManager entityManager) {
-		return new FlushingBulkOperationsRepo(entityManager, batchSize());
-	}
+    @Bean
+    @Qualifier("flushingRepo")
+    public BulkOperationsRepo flushingBulkOperationsRepo(EntityManager entityManager) {
+        return new FlushingBulkOperationsRepo(entityManager, batchSize());
+    }
 
-	@Bean
-	public StatelessSession statelessSession(EntityManagerFactory entityManager) {
-		return entityManager.unwrap(SessionFactory.class).getSessionFactory().openStatelessSession();
-	}
+    @Bean
+    public StatelessSession statelessSession(EntityManagerFactory entityManager) {
+        return entityManager.unwrap(SessionFactory.class).getSessionFactory().openStatelessSession();
+    }
 
-	// Note the special bean name.
-	// According to the Spring Data naming conventions,
-	// this will be used as implementation of the repository repository operations.
-	@Bean(name = "customerRepositoryImpl")
-	@Qualifier("statelessSessionRepo")
-	public BulkOperationsRepo statelessSessionBulkOperationsRepo(EntityManager entityManager,
-			StatelessSession statelessSession) {
-		return new StatelessSessionBulkOperationsRepo(entityManager, statelessSession);
-	}
+    // Note the special bean name.
+    // According to the Spring Data naming conventions,
+    // this will be used as implementation of the repository repository operations.
+    @Bean(name = "customerRepositoryImpl")
+    @Qualifier("statelessSessionRepo")
+    public BulkOperationsRepo statelessSessionBulkOperationsRepo(StatelessSession statelessSession) {
+        return new StatelessSessionBulkOperationsRepo(statelessSession);
+    }
 
-	@Bean
-	@Qualifier("jdbcTemplateRepo")
-	public BulkOperationsRepo jdbcTemplateBulkOperationsRepo() throws PropertyVetoException {
-		return new JdbcTemplateBulkOperationsRepo(jdbcTemplate());
-	}
+    @Bean
+    @Qualifier("jdbcTemplateRepo")
+    public BulkOperationsRepo jdbcTemplateBulkOperationsRepo() throws PropertyVetoException {
+        return new JdbcTemplateBulkOperationsRepo(jdbcTemplate());
+    }
 
-	@Bean
-	@Qualifier("jdbiRepo")
-	public BulkOperationsRepo jdbiBulkOperationsRepo() throws PropertyVetoException {
-		return new JdbiBulkOperationsRepo(jdbi(), batchSize());
-	}
+    @Bean
+    @Qualifier("jdbiRepo")
+    public BulkOperationsRepo jdbiBulkOperationsRepo() throws PropertyVetoException {
+        return new JdbiBulkOperationsRepo(jdbi(), batchSize());
+    }
 
-	// JdbcTemplate
+    // JdbcTemplate
 
-	@Bean
-	public JdbcTemplate jdbcTemplate() throws PropertyVetoException {
-		return new JdbcTemplate(dataSource());
-	}
+    @Bean
+    public JdbcTemplate jdbcTemplate() throws PropertyVetoException {
+        return new JdbcTemplate(dataSource());
+    }
 
-	// JDBI
+    // JDBI
 
-	@Bean
-	public IDBI jdbi() throws PropertyVetoException {
-		return new DBI(dataSource());
-	}
+    @Bean
+    public IDBI jdbi() throws PropertyVetoException {
+        return new DBI(dataSource());
+    }
 
-	// JUnit rule to clear the DB
+    // JUnit rule to clear the DB
 
-	@Bean
-	public CleanDb clearDatabase() throws PropertyVetoException {
-		return new CleanDb(jdbi());
-	}
+    @Bean
+    public CleanDb clearDatabase() throws PropertyVetoException {
+        return new CleanDb(jdbi());
+    }
 
-	// other configuration
+    // other configuration
 
-	private int batchSize() {
-		return 500;
-	}
+    private int batchSize() {
+        return 500;
+    }
 
 }

@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
 @Qualifier("flushing")
 public final class FlushingBulkOperations extends AbstractBulkOperations {
 
-	@Autowired
-	@Qualifier("flushingRepo")
-	private BulkOperationsRepo bulkOperationsRepo;
+    @Autowired
+    @Qualifier("flushingRepo")
+    private BulkOperationsRepo bulkOperationsRepo;
 
-	@Override
-	protected BulkOperationsRepo bulkOperations() {
-		return bulkOperationsRepo;
-	}
+    @Override
+    protected BulkOperationsRepo bulkOperations() {
+        return bulkOperationsRepo;
+    }
 
 }

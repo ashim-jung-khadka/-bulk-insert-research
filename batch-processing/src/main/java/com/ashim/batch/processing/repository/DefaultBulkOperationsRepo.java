@@ -11,18 +11,18 @@ import java.util.List;
  */
 public class DefaultBulkOperationsRepo implements BulkOperationsRepo {
 
-	private final EntityManager em;
+    private final EntityManager em;
 
-	public DefaultBulkOperationsRepo(EntityManager em) {
-		this.em = em;
-	}
+    public DefaultBulkOperationsRepo(EntityManager em) {
+        this.em = em;
+    }
 
-	@Override
-	@Transactional
-	public void bulkPersist(List<Customer> entities) {
-		for (Customer entity : entities) {
-			this.em.persist(entity);
-		}
-	}
+    @Override
+    @Transactional
+    public void bulkPersist(List<Customer> entities) {
+        for (Customer entity : entities) {
+            this.em.persist(entity);
+        }
+    }
 
 }

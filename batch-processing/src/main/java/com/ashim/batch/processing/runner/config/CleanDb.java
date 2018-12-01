@@ -14,20 +14,20 @@ import org.springframework.stereotype.Service;
 @Service
 public final class CleanDb {
 
-	private final Logger log = LoggerFactory.getLogger(CleanDb.class);
+    private final Logger log = LoggerFactory.getLogger(CleanDb.class);
 
-	private final IDBI dbi;
+    private final IDBI dbi;
 
-	public CleanDb(IDBI dbi) {
-		this.dbi = dbi;
-	}
+    public CleanDb(IDBI dbi) {
+        this.dbi = dbi;
+    }
 
-	public void cleanUp() {
-		log.info("Clearing the database...");
+    public void cleanUp() {
+        log.info("Clearing the database...");
 
-		dbi.inTransaction((TransactionCallback<Void>) (handle, status) -> {
-			handle.execute("delete from customer");
-			return null;
-		});
-	}
+        dbi.inTransaction((TransactionCallback<Void>) (handle, status) -> {
+            handle.execute("delete from customer");
+            return null;
+        });
+    }
 }
