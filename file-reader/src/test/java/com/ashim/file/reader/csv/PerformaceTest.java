@@ -1,11 +1,15 @@
 package com.ashim.file.reader.csv;
 
+import com.fasterxml.jackson.databind.MappingIterator;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBeanBuilder;
 import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -29,6 +33,7 @@ public class PerformaceTest {
         this.test_using_open_csv1();
         this.test_using_open_csv2();
         this.test_using_open_csv_bean_builder();
+        this.test_using_jackson_csv();
     }
 
     private void test_using_scanner() throws FileNotFoundException {
@@ -45,8 +50,8 @@ public class PerformaceTest {
             }
         }
         scanner.close();
-        System.out.println("test_using_scanner-> time taken : " + (System.currentTimeMillis() - startTime));
 
+        this.printTime("test_using_scanner", startTime);
         this.printMemoryStatus();
         System.out.println();
     }
@@ -70,8 +75,8 @@ public class PerformaceTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("test_using_buffer_reader-> time taken : " + (System.currentTimeMillis() - startTime));
 
+        this.printTime("test_using_buffer_reader", startTime);
         this.printMemoryStatus();
         System.out.println();
     }
@@ -86,8 +91,8 @@ public class PerformaceTest {
             // nothing to implement
             System.out.print("");
         }
-        System.out.println("test_using_open_csv1-> time taken : " + (System.currentTimeMillis() - startTime));
 
+        this.printTime("test_using_open_csv1", startTime);
         this.printMemoryStatus();
         System.out.println();
     }
@@ -101,8 +106,8 @@ public class PerformaceTest {
             // nothing to implement
             System.out.print("");
         }
-        System.out.println("test_using_open_csv2-> time taken : " + (System.currentTimeMillis() - startTime));
 
+        this.printTime("test_using_open_csv2", startTime);
         this.printMemoryStatus();
         System.out.println();
     }
@@ -113,8 +118,23 @@ public class PerformaceTest {
         long startTime = System.currentTimeMillis();
         List<FxDeal> fxDeals = new CsvToBeanBuilder<FxDeal>(new FileReader(CSV_FILE)).withType(FxDeal.class).build()
                 .parse();
-        System.out.println("test_using_open_csv2-> time taken : " + (System.currentTimeMillis() - startTime));
 
+        this.printTime("test_using_open_csv_bean_builder", startTime);
+        this.printMemoryStatus();
+        System.out.println();
+    }
+
+    private void test_using_jackson_csv() throws IOException {
+        this.setMemoryStatus();
+
+        long startTime = System.currentTimeMillis();
+        CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader();
+        CsvMapper mapper = new CsvMapper();
+        MappingIterator<FxDeal> readValues = mapper.readerFor(FxDeal.class).with(bootstrapSchema)
+                .readValues(new FileInputStream(CSV_FILE));
+        readValues.readAll();
+
+        this.printTime("test_using_jackson_csv", startTime);
         this.printMemoryStatus();
         System.out.println();
     }
@@ -126,6 +146,11 @@ public class PerformaceTest {
     private void printMemoryStatus() {
         usedMemory = ((RUNTIME.totalMemory() - RUNTIME.freeMemory()) / MB) - usedMemory;
         System.out.println("Used Memory: " + usedMemory + "MB");
+    }
+
+    private void printTime(String name, long startTime) {
+        System.out.println(
+                name.toUpperCase() + " -> time taken : " + (System.currentTimeMillis() - startTime) + "ms");
     }
 
 }
