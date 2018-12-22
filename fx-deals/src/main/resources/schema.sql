@@ -1,36 +1,33 @@
-drop table if exists deals;
 drop table if exists deal_count;
-drop table if exists invalid_deals;
+drop table if exists invalid_deal;
+drop table if exists valid_deal;
 
-create table deals (
-  id bigint not null,
-  amount double precision,
-  deal_id varchar(255),
-  deal_time datetime,
-  file_name varchar(255),
-  from_currency varchar(255),
-  to_currency varchar(255),
-  primary key (id)
-);
+CREATE TABLE deal_count (
+	id BIGINT NOT NULL
+	,count_of_deals INTEGER NOT NULL
+	,from_currency_code VARCHAR(255)
+	,to_currency_code VARCHAR(255)
+	,PRIMARY KEY (id)
+	) engine = InnoDB;
 
-create table deal_count
-  (id bigint not null,
-  count_of_deals integer not null,
-  currency_code varchar(255),
-  primary key (id)
-);
+CREATE TABLE invalid_deal (
+	id BIGINT NOT NULL
+	,amount VARCHAR(255)
+	,deal_id VARCHAR(255)
+	,deal_time VARCHAR(255)
+	,file_name VARCHAR(255)
+	,from_currency VARCHAR(255)
+	,to_currency VARCHAR(255)
+	,PRIMARY KEY (id)
+	) engine = InnoDB;
 
-create table invalid_deals(
-  deal_id varchar(30),
-  from_currency varchar(10),
-  to_currency varchar(10),
-  deal_time varchar(30),
-  amount varchar(20),
-  file_name varchar(50)
-);
-
-
--- drop table if exists hibernate_sequence;
--- create table hibernate_sequence (next_val bigint) engine=myisam
--- insert into hibernate_sequence values ( 1 )
--- insert into hibernate_sequence values ( 1 )
+CREATE TABLE valid_deal (
+	id BIGINT NOT NULL
+	,amount DOUBLE PRECISION
+	,deal_id VARCHAR(255)
+	,deal_time DATETIME
+	,file_name VARCHAR(255)
+	,from_currency VARCHAR(255)
+	,to_currency VARCHAR(255)
+	,PRIMARY KEY (id)
+	) engine = InnoDB;

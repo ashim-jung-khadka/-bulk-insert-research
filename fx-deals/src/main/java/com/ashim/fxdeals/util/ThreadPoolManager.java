@@ -15,27 +15,27 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class ThreadPoolManager {
 
-    private static final ListeningExecutorService executorService =
-            MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10,
-                    new ThreadFactoryBuilder().setNameFormat("api-pool-%d").build()));
+	private static final ListeningExecutorService executorService =
+			MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10,
+					new ThreadFactoryBuilder().setNameFormat("api-pool-%d").build()));
 
-    private ThreadPoolManager() {
-    }
+	private ThreadPoolManager() {
+	}
 
-    public static ListeningExecutorService getExecutorService() {
-        return (executorService);
-    }
+	public static ListeningExecutorService getExecutorService() {
+		return (executorService);
+	}
 
-    @PreDestroy
-    public void destroy() {
-        executorService.shutdown();
-        try {
-            if (!executorService.awaitTermination(3, TimeUnit.SECONDS)) {
-                executorService.shutdownNow();
-            }
-        } catch (InterruptedException ie) {
-            executorService.shutdownNow();
-            Thread.currentThread().interrupt();
-        }
-    }
+	@PreDestroy
+	public void destroy() {
+		executorService.shutdown();
+		try {
+			if (!executorService.awaitTermination(3, TimeUnit.SECONDS)) {
+				executorService.shutdownNow();
+			}
+		} catch (InterruptedException ie) {
+			executorService.shutdownNow();
+			Thread.currentThread().interrupt();
+		}
+	}
 }

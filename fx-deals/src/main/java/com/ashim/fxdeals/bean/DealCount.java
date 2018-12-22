@@ -15,67 +15,68 @@ import java.io.Serializable;
 @Table(name = "deal_count")
 public class DealCount implements Serializable {
 
-    private static final long serialVersionUID = -1124719551435543217L;
+	private static final long serialVersionUID = -1124719551435543217L;
 
-    @Id
-    @GeneratedValue(generator = "generator")
-    @GenericGenerator(name = "generator", strategy = "increment")
-    private Long id;
-    private String fromCurrencyCode;
-    private String toCurrencyCode;
-    private int countOfDeals;
+	@Id
+	@GeneratedValue(generator = "generator")
+	@GenericGenerator(name = "generator", strategy = "increment")
+	private Long id;
+	private String fromCurrencyCode;
+	private String toCurrencyCode;
+	private int countOfDeals;
 
-    public DealCount() {
-    }
+	public DealCount() {
+	}
 
-    public DealCount(String fromCurrencyCode, String toCurrencyCode, int countOfDeals) {
-        this.fromCurrencyCode = fromCurrencyCode;
-        this.toCurrencyCode = toCurrencyCode;
-        this.countOfDeals = countOfDeals;
-    }
+	public DealCount(String fromCurrencyCode, String toCurrencyCode, int countOfDeals) {
+		this.fromCurrencyCode = fromCurrencyCode;
+		this.toCurrencyCode = toCurrencyCode;
+		this.countOfDeals = countOfDeals;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getFromCurrencyCode() {
-        return fromCurrencyCode;
-    }
+	public String getFromCurrencyCode() {
+		return fromCurrencyCode;
+	}
 
-    public void setFromCurrencyCode(String fromCurrencyCode) {
-        this.fromCurrencyCode = fromCurrencyCode;
-    }
+	public void setFromCurrencyCode(String fromCurrencyCode) {
+		this.fromCurrencyCode = fromCurrencyCode;
+	}
 
-    public String getToCurrencyCode() {
-        return toCurrencyCode;
-    }
+	public String getToCurrencyCode() {
+		return toCurrencyCode;
+	}
 
-    public void setToCurrencyCode(String toCurrencyCode) {
-        this.toCurrencyCode = toCurrencyCode;
-    }
+	public void setToCurrencyCode(String toCurrencyCode) {
+		this.toCurrencyCode = toCurrencyCode;
+	}
 
-    public int getCountOfDeals() {
-        return countOfDeals;
-    }
+	public int getCountOfDeals() {
+		return countOfDeals;
+	}
 
-    public void setCountOfDeals(int countOfDeals) {
-        this.countOfDeals = countOfDeals;
-    }
+	public void setCountOfDeals(int countOfDeals) {
+		this.countOfDeals = countOfDeals;
+	}
 
-    public void incrementCount(int count) {
-        setCountOfDeals(countOfDeals + count);
-    }
+	public void incrementCount(int count) {
+		setCountOfDeals(countOfDeals + count);
+	}
 
-    @Override public String toString() {
-        return "DealCount{" +
-                "id=" + id +
-                ", fromCurrencyCode='" + fromCurrencyCode + '\'' +
-                ", toCurrencyCode='" + toCurrencyCode + '\'' +
-                ", countOfDeals=" + countOfDeals +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "DealCount{" +
+				"id=" + id +
+				", fromCurrencyCode='" + fromCurrencyCode + '\'' +
+				", toCurrencyCode='" + toCurrencyCode + '\'' +
+				", countOfDeals=" + countOfDeals +
+				'}';
+	}
 }

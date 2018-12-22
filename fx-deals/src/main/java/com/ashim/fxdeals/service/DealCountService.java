@@ -1,7 +1,7 @@
 package com.ashim.fxdeals.service;
 
 import com.ashim.fxdeals.bean.DealCount;
-import com.ashim.fxdeals.repo.DealCountRepository;
+import com.ashim.fxdeals.repo.jpa.DealCountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,18 +11,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class DealCountService {
 
-    @Autowired
-    private DealCountRepository dealCountRepository;
+	@Autowired
+	private DealCountRepository dealCountRepository;
 
-    public Iterable<DealCount> getAllDealCount() {
-        return this.dealCountRepository.findAll();
-    }
+	public Iterable<DealCount> getAllDealCount() {
+		return this.dealCountRepository.findAll();
+	}
 
-    public DealCount getDealCount(String fromCurrencyCode, String toCurrencyCode) {
-        return this.dealCountRepository.findByFromCurrencyCodeAndToCurrencyCode(fromCurrencyCode, toCurrencyCode);
-    }
+	public DealCount getDealCount(String fromCurrencyCode, String toCurrencyCode) {
+		return this.dealCountRepository.findByFromCurrencyCodeAndToCurrencyCode(fromCurrencyCode, toCurrencyCode);
+	}
 
-    public void save(DealCount dealCount) {
-        this.dealCountRepository.save(dealCount);
-    }
+	public void save(DealCount dealCount) {
+		this.dealCountRepository.save(dealCount);
+	}
 }

@@ -16,86 +16,86 @@ import java.util.Date;
 @Table(name = "valid_deal")
 public class ValidDeal implements Serializable {
 
-    private static final long serialVersionUID = 6850817883135808158L;
+	private static final long serialVersionUID = 6850817883135808158L;
 
-    @Id
-    @GeneratedValue(generator = "generator")
-    @GenericGenerator(name = "generator", strategy = "increment")
-    private Long id;
+	@Id
+	@GeneratedValue(generator = "generator")
+	@GenericGenerator(name = "generator", strategy = "increment")
+	private Long id;
 
-    private String dealId;
-    private String fromCurrency;
-    private String toCurrency;
-    private Date dealTime;
-    private Double amount;
-    private String fileName;
+	private String dealId;
+	private String fromCurrency;
+	private String toCurrency;
+	private Date dealTime;
+	private Double amount;
+	private String fileName;
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getDealId() {
-        return dealId;
-    }
+	public String getDealId() {
+		return dealId;
+	}
 
-    public void setDealId(String dealId) {
-        this.dealId = dealId;
-    }
+	public void setDealId(String dealId) {
+		this.dealId = dealId;
+	}
 
-    public String getFromCurrency() {
-        return fromCurrency;
-    }
+	public String getFromCurrency() {
+		return fromCurrency;
+	}
 
-    public void setFromCurrency(String fromCurrency) {
-        this.fromCurrency = fromCurrency;
-    }
+	public void setFromCurrency(String fromCurrency) {
+		this.fromCurrency = fromCurrency;
+	}
 
-    public String getToCurrency() {
-        return toCurrency;
-    }
+	public String getToCurrency() {
+		return toCurrency;
+	}
 
-    public void setToCurrency(String toCurrency) {
-        this.toCurrency = toCurrency;
-    }
+	public void setToCurrency(String toCurrency) {
+		this.toCurrency = toCurrency;
+	}
 
-    public Date getDealTime() {
-        return dealTime;
-    }
+	public Date getDealTime() {
+		return dealTime;
+	}
 
-    public void setDealTime(Date dealTime) {
-        this.dealTime = dealTime;
-    }
+	public void setDealTime(Date dealTime) {
+		this.dealTime = dealTime;
+	}
 
-    public Double getAmount() {
-        return amount;
-    }
+	public Double getAmount() {
+		return amount;
+	}
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
 
-    public String getFileName() {
-        return fileName;
-    }
+	public String getFileName() {
+		return fileName;
+	}
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
-    @Override
-    public String toString() {
-        return "ValidDeal{" +
-                "id=" + id +
-                ", dealId='" + dealId + '\'' +
-                ", fromCurrency='" + fromCurrency + '\'' +
-                ", toCurrency='" + toCurrency + '\'' +
-                ", dealTime=" + dealTime +
-                ", amount=" + amount +
-                ", fileName='" + fileName + '\'' +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "ValidDeal{" +
+				"id=" + id +
+				", dealId='" + dealId + '\'' +
+				", fromCurrency='" + fromCurrency + '\'' +
+				", toCurrency='" + toCurrency + '\'' +
+				", dealTime=" + dealTime +
+				", amount=" + amount +
+				", fileName='" + fileName + '\'' +
+				'}';
+	}
 }

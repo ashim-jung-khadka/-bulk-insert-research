@@ -1,7 +1,7 @@
 package com.ashim.fxdeals;
 
 import com.ashim.fxdeals.service.StorageService;
-import com.ashim.fxdeals.util.StorageProperties;
+import com.ashim.fxdeals.util.FxDealConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,44 +30,44 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest
 public class StorageServiceTest {
 
-    @Autowired
-    private StorageService storageService;
+	@Autowired
+	private StorageService storageService;
 
-    @Autowired
-    private StorageProperties properties;
+	@Autowired
+	private FxDealConfig fxDealConfig;
 
-    private static final String defaultResource = "sample_resource.csv";
+	private static final String defaultResource = "sample_resource.csv";
 
-    @Before
-    public void setUp() throws IOException {
-        InputStream is = StorageServiceTest.class.getClassLoader().getResourceAsStream(defaultResource);
-        Path path = Paths.get(defaultResource);
-        Path rootLocation = Paths.get(this.properties.getLocation());
+	@Before
+	public void setUp() throws IOException {
+		InputStream is = StorageServiceTest.class.getClassLoader().getResourceAsStream(defaultResource);
+		Path path = Paths.get(defaultResource);
+		Path rootLocation = Paths.get(this.fxDealConfig.getStorageLocation());
 
-        Files.copy(is, rootLocation.resolve(path), StandardCopyOption.REPLACE_EXISTING);
-    }
+		Files.copy(is, rootLocation.resolve(path), StandardCopyOption.REPLACE_EXISTING);
+	}
 
-    @Test
-    public void shouldUploadFile() throws Exception {
-        InputStream uploadStream = StorageServiceTest.class.getClassLoader().getResourceAsStream("sample.csv");
-        MockMultipartFile file = new MockMultipartFile("sample.csv",
-                "sample.csv", "text/csv", FileCopyUtils.copyToByteArray(uploadStream));
+	@Test
+	public void shouldUploadFile() throws Exception {
+		InputStream uploadStream = StorageServiceTest.class.getClassLoader().getResourceAsStream("sample.csv");
+		MockMultipartFile file = new MockMultipartFile("sample.csv",
+				"sample.csv", "text/csv", FileCopyUtils.copyToByteArray(uploadStream));
 
-        assert uploadStream != null;
-        this.storageService.storeFile(file);
+		assert uploadStream != null;
+		this.storageService.storeFile(file);
 
-        Stream<Path> pathStream = this.storageService.loadAll();
-        Optional<Path> csvPath = pathStream
-                .filter(path -> "sample.csv".equalsIgnoreCase(path.getFileName().toString()))
-                .findFirst();
+		Stream<Path> pathStream = this.storageService.loadAll();
+		Optional<Path> csvPath = pathStream
+				.filter(path -> "sample.csv".equalsIgnoreCase(path.getFileName().toString()))
+				.findFirst();
 
-        assertTrue(csvPath.isPresent());
-    }
+		assertTrue(csvPath.isPresent());
+	}
 
-    @Test
-    public void shouldReturnResource() {
-        Resource resource = this.storageService.loadAsResource(defaultResource);
-        assertTrue(resource.exists());
-        assertEquals(defaultResource, resource.getFilename());
-    }
+	@Test
+	public void shouldReturnResource() {
+		Resource resource = this.storageService.loadAsResource(defaultResource);
+		assertTrue(resource.exists());
+		assertEquals(defaultResource, resource.getFilename());
+	}
 }

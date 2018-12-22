@@ -1,4 +1,4 @@
-package com.ashim.fxdeals.repo;
+package com.ashim.fxdeals.repo.jpa;
 
 import com.ashim.fxdeals.bean.DealCount;
 import org.springframework.data.repository.CrudRepository;
@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DealCountRepository extends CrudRepository<DealCount, String> {
 
-    DealCount findByFromCurrencyCodeAndToCurrencyCode(String fromCurrencyCode, String toCurrencyCode);
+	DealCount findByFromCurrencyCodeAndToCurrencyCode(String fromCurrencyCode, String toCurrencyCode);
 
 }

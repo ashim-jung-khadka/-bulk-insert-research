@@ -4,6 +4,7 @@
 * mysql> create database fxdeal_db;
 * mysql> create user 'fx_user'@'localhost' identified by 'fx_pwd';
 * mysql> grant all on fxdeal_db.* to 'fx_user'@'localhost';
+* mysql> SET GLOBAL general_log = 'ON';
 
 ## Resources
 * [Entity Detached](https://techsparx.com/software-development/spring/detached-entity-persist.html)

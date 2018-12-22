@@ -1,113 +1,135 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="">
-	<meta name="author" content="">
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-	<title>FX Deals</title>
+    <title>FX Deals</title>
 
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          rel="stylesheet">
 
 </head>
 
 <body class="bg-light">
 
 <header>
-	<div class="navbar navbar-dark bg-dark shadow-sm">
-		<div class="container d-flex justify-content-between">
-			<a href="#" class="navbar-brand d-flex align-items-center">
-				<i class="fas fa-briefcase"></i>
-				<strong style="padding: 0 7px;">FX Deals</strong>
-			</a>
-		</div>
-	</div>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container d-flex justify-content-between">
+            <a href="#" class="navbar-brand d-flex align-items-center">
+                <i class="fas fa-briefcase"></i>
+                <strong style="padding: 0 7px;">FX Deals</strong>
+            </a>
+        </div>
+    </div>
 </header>
 
 <main role="main">
 
-	<div class="album py-3">
-		<div class="container">
+    <div class="album py-3">
+        <div class="container">
 
-			<div class="py-3 text-center">
-				<h2>Upload Deals</h2>
-				<span th:if="${message}">
+            <div class="py-3 text-center">
+                <h2 id="upload">Upload Deals</h2>
+                <span th:if="${message}">
                     <p class="lead" th:text="${message}"></p>
                 </span>
 
-				<div class="order-md-1">
-					<form method="POST" enctype="multipart/form-data" action="/fx-deals/upload">
-						<div class="row">
-							<div class="col-md-12 mb-3">
-								<ul class="list-group mb-3">
-									<li class="list-group-item">
-										<div>
-											<input type="file" class="form-control-file form-control-sm" id="file"
-											       name="file" placeholder="" value="" required>
-										</div>
-									</li>
-									<br/>
-									<li class="d-flex">
-										<div style="margin: 0 auto;">
-											<button class="btn btn-primary btn-block" type="submit">Upload</button>
-										</div>
-									</li>
-								</ul>
+                <div class="order-md-1">
+                    <form method="POST" enctype="multipart/form-data"
+                          action="/fx-deals/upload">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <ul class="list-group mb-3">
+                                    <li class="list-group-item">
+                                        <div>
+                                            <input type="file"
+                                                   class="form-control-file form-control-sm"
+                                                   id="file"
+                                                   name="file" placeholder=""
+                                                   value="" required>
+                                        </div>
+                                    </li>
+                                    <br/>
+                                    <li class="d-flex">
+                                        <div style="margin: 0 auto;">
+                                            <button id="submit"
+                                                    class="btn btn-primary btn-block"
+                                                    type="submit">Upload
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
 
-								<br/>
+                                <br/>
 
-								<h2>Valid Deal Summary</h2>
-								<div class="table-responsive">
-									<table class="table table-striped table-sm">
-										<thead>
-										<tr>
-											<th>From Currency</th>
-											<th>To Currency</th>
-											<th>Count of Deals</th>
-										</tr>
-										</thead>
-										<tbody>
+                                <h2 id="valid-summary">Valid Deal Summary</h2>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-sm">
+                                        <thead>
+                                        <tr>
+                                            <th>From Currency</th>
+                                            <th>To Currency</th>
+                                            <th>Count of Deals</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
 
-										<tr th:each="dealCount : ${dealCounts}">
-											<td th:text="${dealCount.fromCurrencyCode}">fromCurrencyCode</td>
-											<td th:text="${dealCount.toCurrencyCode}">toCurrencyCode</td>
-											<td th:text="${dealCount.countOfDeals}">countOfDeals</td>
-										</tr>
-										</tbody>
-									</table>
-								</div>
+                                        <tr th:each="dealCount : ${dealCounts}">
+                                            <td th:text="${dealCount.fromCurrencyCode}">
+                                                fromCurrencyCode
+                                            </td>
+                                            <td th:text="${dealCount.toCurrencyCode}">
+                                                toCurrencyCode
+                                            </td>
+                                            <td th:text="${dealCount.countOfDeals}">
+                                                countOfDeals
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
 
-								<h2>Invalid Deal Summary</h2>
-								<div class="table-responsive">
-									<table class="table table-striped table-sm">
-										<thead>
-										<tr>
-											<th>From Currency</th>
-											<th>To Currency</th>
-											<th>Count of Deals</th>
-										</tr>
-										</thead>
-										<tbody>
+                                <h2 id="invalid-summary">Invalid Deal
+                                    Summary</h2>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-sm">
+                                        <thead>
+                                        <tr>
+                                            <th>From Currency</th>
+                                            <th>To Currency</th>
+                                            <th>Count of Deals</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
 
-										<tr th:each="dealCount : ${invalidDealCounts}">
-											<td th:text="${dealCount.fromCurrencyCode}">fromCurrencyCode</td>
-											<td th:text="${dealCount.toCurrencyCode}">toCurrencyCode</td>
-											<td th:text="${dealCount.countOfDeals}">countOfDeals</td>
-										</tr>
-										</tbody>
-									</table>
-								</div>
+                                        <tr th:each="dealCount : ${invalidDealCounts}">
+                                            <td th:text="${dealCount.fromCurrencyCode}">
+                                                fromCurrencyCode
+                                            </td>
+                                            <td th:text="${dealCount.toCurrencyCode}">
+                                                toCurrencyCode
+                                            </td>
+                                            <td th:text="${dealCount.countOfDeals}">
+                                                countOfDeals
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
 
-							</div>
-						</div>
-					</form>
-				</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
-			</div>
-		</div>
-
+            </div>
+        </div>
+    </div>
 </main>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
