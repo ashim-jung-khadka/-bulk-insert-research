@@ -1,0 +1,54 @@
+<html>
+<head>
+    <title>Browser Storage</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="robots" content="noindex"/>
+
+</head>
+
+<body bgcolor="#FFFFFF">
+<h1>cookie example</h1>
+<fieldset style="font-size:140%">
+    <form method="post" action="">
+        <input type="text" id="cookie" size="40"
+               value="cookie" name="text">
+        <input type="button" name="submit"
+               value="Save" onClick="saveIntoCookie()">
+    </form>
+
+    <a href="/fx-deals/output" target="_blank"
+       rel="nofollow">goto output page</a>
+</fieldset>
+<br>
+<br>
+<h1>sessionStorage example</h1>
+<fieldset style="font-size:140%">
+    <form method="post" action="">
+        <input type="text" id="sessionStorage" size="40"
+               value="session" name="text">
+        <input type="button" name="submit"
+               value="Save" onClick="saveIntoSessionStorage()">
+    </form>
+
+    <a href="/fx-deals/output" target="_blank"
+       rel="nofollow">goto output page</a>
+</fieldset>
+<br>
+<br>
+
+<script>
+    function saveIntoCookie() {
+        var element = document.getElementById("cookie");
+        document.cookie = element.value;
+        alert("Saved");
+    }
+
+    function saveIntoSessionStorage() {
+        var element = document.getElementById("sessionStorage");
+        window.sessionStorage.saved = element.value;
+        alert("Saved");
+    }
+</script>
+
+</body>
+</html>
