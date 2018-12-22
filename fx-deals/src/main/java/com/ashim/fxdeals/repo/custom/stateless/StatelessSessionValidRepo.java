@@ -15,7 +15,8 @@ import java.util.List;
 @Component
 public class StatelessSessionValidRepo implements CustomRepo<ValidDeal> {
 
-	@Autowired private StatelessSession statelessSession;
+	@Autowired
+	private StatelessSession statelessSession;
 
 	@Override
 	@Transactional

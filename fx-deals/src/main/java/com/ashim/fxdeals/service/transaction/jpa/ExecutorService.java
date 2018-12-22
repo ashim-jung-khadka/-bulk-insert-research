@@ -74,12 +74,12 @@ public class ExecutorService extends TransactionService {
 
 			@Override
 			public void onSuccess(List<String> rs) {
-				if (validDeals.size() > 0) {
+				if (!validDeals.isEmpty()) {
 					validDealRepository.saveAll(validDeals);
 					validDeals.clear();
 				}
 
-				if (invalidDeals.size() > 0) {
+				if (!invalidDeals.isEmpty()) {
 					dealRepository.saveAll(invalidDeals);
 					invalidDeals.clear();
 				}

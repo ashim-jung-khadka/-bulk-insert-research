@@ -25,8 +25,10 @@ public class DealController {
 
 	private static final Logger logger = LoggerFactory.getLogger(DealController.class);
 
-	@Autowired private DealCountService dealCountService;
-	@Autowired private FxDealService fxDealService;
+	@Autowired
+	private DealCountService dealCountService;
+	@Autowired
+	private FxDealService fxDealService;
 
 	@GetMapping("/")
 	public String listDealCounts(Model model) {

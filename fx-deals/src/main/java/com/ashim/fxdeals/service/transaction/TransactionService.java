@@ -58,11 +58,11 @@ public abstract class TransactionService {
 		File uploadedFile = this.storageService.loadAsResource(fileName).getFile();
 
 		logger.info("persisting in database");
-		CSVReader reader = new CSVReader(new FileReader(uploadedFile));
-		reader.skip(1);
+		try (CSVReader reader = new CSVReader(new FileReader(uploadedFile))) {
+			reader.skip(1);
 
-		this.performDbTransaction(reader, fileName);
-		reader.close();
+			this.performDbTransaction(reader, fileName);
+		}
 
 		return true;
 	}

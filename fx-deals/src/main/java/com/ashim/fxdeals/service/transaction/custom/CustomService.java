@@ -35,11 +35,11 @@ public abstract class CustomService extends TransactionService {
 	}
 
 	private void persistRemainingDataUsingCustomRepo(List<ValidDeal> validDeals, List<Deal> invalidDeals) {
-		if (validDeals.size() > 0) {
+		if (!validDeals.isEmpty()) {
 			this.getValidRepo().saveDeal(validDeals);
 		}
 
-		if (invalidDeals.size() > 0) {
+		if (!invalidDeals.isEmpty()) {
 			this.getInvalidRepo().saveDeal(invalidDeals);
 		}
 	}
