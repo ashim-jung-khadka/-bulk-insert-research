@@ -1,0 +1,5 @@
+dealId,fromCurrency,toCurrency,dealTime,amount
+1,USD,NPR,2015-02-01,150.54
+2,USD,NPR,2015-02-01,151.54
+3,USD,NPR,2015-02-01,152.54
+4,USD,NPR,2015-02-01,153.54
